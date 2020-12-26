@@ -11,7 +11,6 @@ app = flask.Flask(__name__)
 def toggle_route():
   if authenticate(flask.request.json):
     toggle_mode()
-    update_state(method="toggle")
     return flask.jsonify({"success": True})
   return flask.jsonify({"code": 403, "message": "Invalid credentials"})
 
