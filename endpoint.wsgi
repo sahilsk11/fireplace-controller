@@ -1,3 +1,3 @@
 import sys
-sys.path.insert(0, '/home/pi/garage-sensor/')
+sys.path.insert(0, '/home/pi/fireplace-controller/')
 from endpoint import app as application
