@@ -16,7 +16,7 @@ def toggle_route():
 
 
 @app.route("/on", methods=['GET', 'POST'])
-def toggle_route():
+def turn_fireplace_on():
   if authenticate(flask.request.json):
     turn_on()
     return flask.jsonify({"success": True})
@@ -24,7 +24,7 @@ def toggle_route():
 
 
 @app.route("/off", methods=['GET', 'POST'])
-def toggle_route():
+def turn_fireplace_off():
   if authenticate(flask.request.json):
     turn_off()
     return flask.jsonify({"success": True})
