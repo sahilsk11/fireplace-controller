@@ -2,44 +2,17 @@ import flask
 import datetime
 import sys
 import passwords
-sys.path.append("/home/pi/garage-sensor/Sensing")
-from control import open_door, close_door, toggle_door, is_door_open
+sys.path.append("/home/pi/fireplace-controller/Sensing")
+from control import toggle_mode
 
 app = flask.Flask(__name__)
-
-
-@app.route("/openDoor", methods=['POST'])
-def open_door_route():
-  if authenticate(flask.request.json):
-    state_changed = open_door()
-    update_state(is_open=True)
-    return flask.jsonify({"success": True, "state_changed": state_changed})
-  return flask.jsonify({"code": 403, "message": "Invalid credentials"})
-
-
-@app.route("/closeDoor", methods=['POST'])
-def close_door_route():
-  if authenticate(flask.request.json):
-    state_changed = close_door()
-    update_state(is_open=False)
-    return flask.jsonify({"success": True, "state_changed": state_changed})
-  return flask.jsonify({"code": 403, "message": "Invalid credentials"})
-
 
 @app.route("/toggle", methods=['POST'])
 def toggle_route():
   if authenticate(flask.request.json):
-    toggle_door()
+    toggle_mode()
     update_state(method="toggle")
     return flask.jsonify({"success": True})
-  return flask.jsonify({"code": 403, "message": "Invalid credentials"})
-
-@app.route("/doorStatus", methods=['POST'])
-def door_status_route():
-  if authenticate(flask.request.json):
-    is_open = is_door_open()
-    update_state(is_open=is_open)
-    return flask.jsonify({"doorOpen": is_open})
   return flask.jsonify({"code": 403, "message": "Invalid credentials"})
 
 def authenticate(data):
